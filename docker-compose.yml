@@ -6,9 +6,9 @@ services:
     environment:
       - TZ=America/Chicago  # Set your timezone
     volumes:
-      - /mnt/user/Dockers/ClamAV/log:/var/log/clamav  # Log storage
-      - /mnt/user/Dockers/ClamAV/db:/var/lib/clamav  # ClamAV database
-      - /mnt/user/Dockers/ClamAV/etc:/etc/clamav  # ClamAV configuration
+      - /mnt/user/appdata/ClamAV/log:/var/log/clamav  # Log storage
+      - /mnt/user/appdata/ClamAV/db:/var/lib/clamav  # ClamAV database
+      - /mnt/user/appdata/ClamAV/etc:/etc/clamav  # ClamAV configuration
       - /mnt/user:/scan  # The directory to scan
     labels:
       - "org.unraid.docker.icon=https://github.com/tquizzle/clamav-alpine/blob/master/img/clamav.png?raw=1"
