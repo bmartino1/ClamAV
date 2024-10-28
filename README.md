@@ -12,7 +12,7 @@ git clone https://github.com/bmartino1/ClamAV.git
 cd ClamAV
 ```
 
-3. Unraid web UI Add a new stack clcik advance and change path to /mnt/user/appdata/ClamAV
+3. Unraid web UI Add a new stack click advance and change path to /mnt/user/appdata/ClamAV
 4. Make edits to docker compoase / autoscan.sh if needed.
 5. Unraid webUI update container to download and see clam av in unraid docker web ui...
-6. start docker when ready to start a AV scan. In this case i have a User script Plugin script to auto scan and do other things if a virus was detected... inclduiging notifying me and stoping other services to prevent a further malware infection...
+6. start docker when ready to start a AV scan. In this case I Personaly have a User script Plugin script to start this docker and auto scan and do other things if a virus was detected... including notifying me and stoping other services to prevent a further malware infection...
