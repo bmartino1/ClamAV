@@ -1,7 +1,7 @@
 # Disclaimer! Many Thanks to TQ!
 https://github.com/tquizzle/clamav-alpine/
 This Project is a Fork! Mainly shared for others who may need a bit more granular control over the ClamAV in unraid.
-THis is not my work, just eddited to work for my needs and shared for the needs of others...
+This is not my work, just eddited to work for my needs and shared for the needs of others...
 
 # First-time Install:
 1. Install Unraid Docker Compose Plugin.
