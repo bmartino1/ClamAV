@@ -6,11 +6,11 @@ THis is not my work, just eddited to work for my needs and shared for the needs 
 1. Install Unraid Docker Compose Plugin.
 2. Open Unraid terminal(via putty/Web UI / Console directly) cd to assumed data path to keep files. "cd /mnt/user/appdata" then GIT Clone the repo locally to the Unriad machine:
 
-'''
+```
 cd /mnt/user/appdata
 git clone https://github.com/bmartino1/ClamAV.git
 cd ClamAV
-'''
+```
 
 3. Unraid web UI Add a new stack clcik advance and change path to /mnt/user/appdata/ClamAV
 4. Make edits to docker compoase / autoscan.sh if needed.
