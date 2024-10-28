@@ -1,5 +1,7 @@
 #!/bin/ash
+#Dockers run Alpine Linux ash instead of bash...
 
+#Saved, Old working Auto Scan
 #old working scan all of /mnt/user 2 days...
 #echo update clamAV
 #freshclam
@@ -12,17 +14,19 @@
 #sleep 10
 #exit 0
 
+#New Auto Scan
 # autoscan.sh - Script to update ClamAV and scan specified folders
 
 # Update ClamAV definitions
 echo "Updating ClamAV..."
 freshclam || { echo "Failed to update ClamAV"; exit 1; }
 
+#This asumes Docker Compose /mnt/user is set to dockcer path /scan
 # Define folders to scan (including only the desired Docker folders)
-SCAN_FOLDERS="/scan/Cloud /scan/DLNA /scan/Users /scan/Dockers/Plex /scan/Dockers/PhotoPrism"
+SCAN_FOLDERS="/scan/%foldername% /scan/FolderName"
 
 # Define folders to exclude from scan
-EXCLUDE_DIRS="/scan/LXC /scan/system /scan/appdata /scan/Backups /scan/Dockers/ClamAV /scan/Dockers/Grafana /scan/Dockers/MakeMKV /scan/Dockers/PBS /scan/Dockers/netprobe_lite /scan/Dockers/FastAPI-DLS"
+EXCLUDE_DIRS="/scan/FolderName"
 
 # Perform scan only on specified folders and exclude undesired directories
 echo "Starting ClamAV scan on specified folders..."
