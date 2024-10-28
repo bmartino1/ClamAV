@@ -24,7 +24,7 @@ EXCLUDE_DIRS="/scan/system"
 
 # Perform scan only on specified folders and exclude undesired directories
 echo "Starting ClamAV scan on specified folders..."
-> /var/log/clamav/infectedfile.txt  # Make sure the infected file log is in the correct directory
+#> /var/log/clamav/infectedfile.txt  # Make sure the infected file log is in the correct directory
 for folder in $SCAN_FOLDERS; do
     clamscan --recursive "$folder" -i --log=/var/log/clamav/log.log --verbose --exclude-dir="$EXCLUDE_DIRS"
     if grep -q FOUND /var/log/clamav/log.log; then
