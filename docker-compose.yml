@@ -1,0 +1,24 @@
+services:
+  clamav:
+    image: mkodockx/docker-clamav:alpine
+    container_name: ClamAV
+    network_mode: host  # Use host networking
+    environment:
+      - TZ=America/Chicago  # Set your timezone
+    volumes:
+      - /mnt/user/Dockers/ClamAV/log:/var/log/clamav  # Log storage
+      - /mnt/user/Dockers/ClamAV/db:/var/lib/clamav  # ClamAV database
+      - /mnt/user/Dockers/ClamAV/etc:/etc/clamav  # ClamAV configuration
+      - /mnt/user:/scan  # The directory to scan
+    labels:
+      - "org.unraid.docker.icon=https://github.com/tquizzle/clamav-alpine/blob/master/img/clamav.png?raw=1"
+      - "folder.view=ClamAV"
+      - "net.unraid.docker.managed=composeman"
+    user: "99:100"  # Set user to UID 99 and GID 100
+    command: /bin/sh -c "/var/lib/clamav/autoscan.sh && exit 0"  # Run the scan script and exit
+    restart: "no"  # Prevent automatic restart after exit
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep clamd || exit 1"]  # Optional health check, checking if clamd is running
+      start_period: 120s  # Delay health check by 120 seconds
+      interval: 60s  # Check every 60 seconds
+      retries: 3  # Retry 3 times before considering unhealthy
