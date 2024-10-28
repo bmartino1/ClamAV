@@ -22,6 +22,7 @@ SCAN_FOLDERS="/scan/"
 EXCLUDE_DIRS="/scan/system"
 # Example of multiple folders: 
 # EXCLUDE_DIRS="/scan/%foldername%|/scan/FolderName"
+#Define folders to exclude from scan (as a regex pattern for clamdscan)
 
 # Clear previous scan summary
 > /var/log/clamav/scan_summary.txt  # Make sure the infected file log is in the correct directory
