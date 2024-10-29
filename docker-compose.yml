@@ -3,18 +3,19 @@ services:
     image: mkodockx/docker-clamav:alpine
     container_name: ClamAV
     network_mode: host  # Use host networking
+    privileged: true  # Adds privileged access to the container for managing internal permissions
     environment:
       - TZ=America/Chicago  # Set your timezone
     volumes:
       - /mnt/user/appdata/ClamAV/log:/var/log/clamav  # Log storage
       - /mnt/user/appdata/ClamAV/db:/var/lib/clamav  # ClamAV database
       - /mnt/user/appdata/ClamAV/etc:/etc/clamav  # ClamAV configuration
-      - /mnt/user:/scan  # The directory to scan
+      - /mnt/user:/scan  # The directory to scan (Defulat /mnt/user)
     labels:
       - "org.unraid.docker.icon=https://github.com/tquizzle/clamav-alpine/blob/master/img/clamav.png?raw=1"
       - "folder.view=ClamAV"
       - "net.unraid.docker.managed=composeman"
-    user: "99:100"  # Set user to UID 99 and GID 100
+    user: "0:0"  # Run as root to avoid permission issues
     command: /bin/sh -c "/var/lib/clamav/autoscan.sh && exit 0"  # Run the scan script and exit
     restart: "no"  # Prevent automatic restart after exit
     healthcheck:
