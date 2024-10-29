@@ -77,11 +77,13 @@ SCAN_FOLDERS="/scan"
 # Perform ClamDscan only on specified folders
 for folder in $SCAN_FOLDERS; do
     clamdscan "$folder" --infected --verbose --multiscan --log=/var/log/clamav/log.log --stdout
-    if grep -q FOUND /var/log/clamav/log.log; then
+
+#So log.log is the end of a clamdscan folder that will have a general summary overview... say if something has an infected file. however, clamd.log should now have the Found and file path...
+    if grep -q FOUND /var/log/clamav/clamd.log; then
         echo "Infected file found in $folder..."
         # Capture infections...
         echo "Infected file found in $folder..." >> /var/log/clamav/scan_summary.txt
-        grep FOUND /var/log/clamav/log.log >> /var/log/clamav/scan_summary.txt
+        grep FOUND /var/log/clamav/clamd.log >> /var/log/clamav/scan_summary.txt
     fi
 done
 
