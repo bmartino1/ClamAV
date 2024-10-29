@@ -60,7 +60,7 @@ while ! clamdscan --version > /dev/null 2>&1; do
 done
 
 # Define multiple folders to scan
-SCAN_FOLDERS="/scan/Cloud /scan/DLNA /scan/Users /scan/Dockers/Plex /scan/Dockers/PhotoPrism"
+SCAN_FOLDERS="/scan/"
 
 #EXCLUDE_DIRS="/scan/system"
 #Clamdscan uses /etc/clamd for exclude folder...
@@ -74,7 +74,7 @@ SCAN_FOLDERS="/scan/Cloud /scan/DLNA /scan/Users /scan/Dockers/Plex /scan/Docker
 echo "Starting ClamAV Scan on Specified Folders..."
 for folder in $SCAN_FOLDERS; do
 #    clamscan --recursive "$folder" -i --log=/var/log/clamav/log.log --verbose --exclude-dir="$EXCLUDE_DIRS" #Working Clamscan for optinal use... clamdscan better perfromance
-    clamdscan "$folder" --infected --verbose --multiscan --log=/var/log/clamav/log.log --stdout
+    clamdscan "$folder" --infected --verbose --multiscan --log=/var/log/clamav/log.log --stdout #Will scann but not dispaly the files it is scannign like above command did...
     if grep -q FOUND /var/log/clamav/log.log; then
         echo "Infected file found in $folder..."
         grep FOUND /var/log/clamav/log.log >> /var/log/clamav/scan_summary.txt
