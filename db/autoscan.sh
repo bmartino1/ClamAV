@@ -1,20 +1,18 @@
 #!/bin/ash
-# autoscan.sh - Script to update ClamAV and Scan specified folders
+# autoscan.sh - Script to update ClamAV and scan specified folders
 
 # old saved working of clamscan scan all of /mnt/user...
 # echo update clamAV
 # freshclam
-# echo ClamAV Scan infected files "/scan" look at log...
+# echo ClamAV Scaning for infected files "/scan" look at log...
 #> /var/log/clamav/log.log  # Clear the log AV is using before scan
-# clamscan --recursive /scan -i --log=/var/log/clamav/log.log | grep FOUND >> /var/log/clamav/infectedfile.txt
+#> /var/log/clamav/scan_summary.txt  # Make sure the infected file log is clear for the next scan
+#Note It runs but doen't display what its is scanning in docker log window...
+# clamscan --recursive /scan -i --log=/var/log/clamav/log.log | grep FOUND >> /var/log/clamav/scan_summary.txt
 # sleep 5
-# cat /var/log/clamav/infectedfile.txt
-# cd /var/log/clamav
-# ./find_infected_Files_from_log.sh
-# sleep 10
+# cat /var/log/clamav/scan_summary.txt
 # exit 0
 
-# ClamdScan
 # Update ClamAV definitions
 echo "Updating ClamAV..."
 freshclam || { echo "Failed to update ClamAV"; exit 1; }
@@ -24,7 +22,6 @@ echo "Setting up clamd socket directory..."
 mkdir -p /var/run/clamav
 chown nobody:users /var/run/clamav
 chmod 777 /var/run/clamav
-#Unraid Docker Safe Permissions...
 
 # Ensure clamd daemon is running
 if ! pgrep clamd > /dev/null; then
@@ -57,26 +54,29 @@ while ! clamdscan --version > /dev/null 2>&1; do
         echo "Error: clamd is not ready after waiting. Exiting..."
         exit 1
     fi
-    echo "Waiting for clamd to be ready..."
+    logger -t clamav-scan "Waiting for clamd to be ready..."
     sleep 10
     READY_RETRIES=$((READY_RETRIES + 1))
 done
 
 # Define multiple folders to scan
-SCAN_FOLDERS="/scan/"
+SCAN_FOLDERS="/scan/Cloud /scan/DLNA /scan/Users /scan/Dockers/Plex /scan/Dockers/PhotoPrism"
 
-#To exclude a directy you must edit /etc/clamd see examples at end of file...
+#EXCLUDE_DIRS="/scan/system"
+#Clamdscan uses /etc/clamd for exclude folder...
 
 # Clear previous scan summary and logs
 > /var/log/clamav/log.log  # Clear the log AV is using before scan
 > /var/log/clamav/scan_summary.txt  # Make sure the infected file log is clear for the next scan
 
 # Perform ClamDscan only on specified folders
+# You could try using the --stdout flag with clamdscan to force it to print more detailed logs directly to standard output, which might make its behavior more similar to clamscan.
 echo "Starting ClamAV Scan on Specified Folders..."
 for folder in $SCAN_FOLDERS; do
-    clamdscan "$folder" --infected --verbose --multiscan --log=/var/log/clamav/log.log | tee -a /var/log/clamav/log.log | logger -t clamav-scan
+#    clamscan --recursive "$folder" -i --log=/var/log/clamav/log.log --verbose --exclude-dir="$EXCLUDE_DIRS" #Working Clamscan for optinal use... clamdscan better perfromance
+    clamdscan "$folder" --infected --verbose --multiscan --log=/var/log/clamav/log.log --stdout
     if grep -q FOUND /var/log/clamav/log.log; then
-        echo "Infected file found in $folder..." | logger -t clamav-scan
+        echo "Infected file found in $folder..."
         grep FOUND /var/log/clamav/log.log >> /var/log/clamav/scan_summary.txt
     fi
 done
@@ -84,5 +84,4 @@ done
 # Display infected files at the end of the scan
 echo "Displaying any 'Found' infected files:"
 cat /var/log/clamav/scan_summary.txt
-
 exit 0
