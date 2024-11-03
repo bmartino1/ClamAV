@@ -2,7 +2,11 @@
 [https://github.com/tquizzle/clamav-alpine/](https://github.com/tquizzle/clamav-alpine/)
 
 This project is a fork, primarily shared for users who need more granular control over ClamAV in Unraid. This is not my original work; it has been modified to meet my requirements and is shared for others who may benefit.
-This will use Clamdscan for AV scan and not call clamscan. Why? i had a 48 hour scan become a 6 hour scan by using clamdscan! This is due to how Clamdscann and concurent scans by calling clamscan mutiple times.
+This will use Clamdscan for AV scan and not call clamscan. Why? I had a 48 hour scan become a 6 hour scan by using clamdscan! This is due to how Clamdscann and concurent scans by calling clamscan mutiple times.
+
+See some documentation:
+- https://docs.clamav.net/manual/Usage/Scanning.html
+- https://linux.die.net/man/1/clamscan
 
 ## First-Time Install:
 1. Install the Unraid Docker Compose Plugin.
