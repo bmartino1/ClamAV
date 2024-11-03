@@ -1,19 +1,28 @@
-# Disclaimer! Many Thanks to TQ!
-https://github.com/tquizzle/clamav-alpine/
-This Project is a Fork! Mainly shared for others who may need a bit more granular control over the ClamAV in unraid.
-This is not my work, just eddited to work for my needs and shared for the needs of others...
+# Disclaimer! Special Thanks to TQ!
+[https://github.com/tquizzle/clamav-alpine/](https://github.com/tquizzle/clamav-alpine/)
 
-# First-time Install:
-1. Install Unraid Docker Compose Plugin.
-2. Open Unraid terminal(via putty/Web UI / Console directly) cd to assumed data path to keep files. "cd /mnt/user/appdata" then GIT Clone the repo locally to the Unriad machine:
+This project is a fork, primarily shared for users who need more granular control over ClamAV in Unraid. This is not my original work; it has been modified to meet my requirements and is shared for others who may benefit.
+This will use Clamdscan for AV scan and not call clamscan. Why? i had a 48 hour scan become a 6 hour scan by using clamdscan! This is due to how Clamdscann and concurent scans by calling clamscan mutiple times.
 
-```
-cd /mnt/user/appdata
-git clone https://github.com/bmartino1/ClamAV.git
-cd ClamAV
-```
+## First-Time Install:
+1. Install the Unraid Docker Compose Plugin.
+2. Open the Unraid terminal (via PuTTY, Web UI, or Console directly), navigate to the desired data path to store files (e.g., `/mnt/user/appdata`), and clone the repository to your Unraid machine:
 
-3. Unraid web UI Add a new stack click advance and change path to /mnt/user/appdata/ClamAV
-4. Make edits to docker compoase / autoscan.sh if needed.
-5. Unraid webUI update container to download and see clam av in unraid docker web ui...
-6. start docker when ready to start a AV scan. In this case I Personaly have a User script Plugin script to start this docker and auto scan and do other things if a virus was detected... including notifying me and stoping other services to prevent a further malware infection...
+    ```bash
+    cd /mnt/user/appdata
+    git clone https://github.com/bmartino1/ClamAV.git
+    cd ClamAV
+    ```
+
+3. In the Unraid web UI, add a new stack, click "Advanced," and change the path to `/mnt/user/appdata/ClamAV`.
+4. Make edits to `docker-compose.yml` and `autoscan.sh` if needed.
+5. In the Unraid web UI, update the container to download and make ClamAV visible in the Docker web UI.
+6. Start the Docker container to initiate an antivirus scan. Personally, I use a User Script Plugin to start this Docker container, run an automatic scan, and perform additional actions if a virus is detected. This includes sending notifications and stopping other services to prevent further malware infection.
+
+---
+
+Let me know if you have any questions or need further assistance!
+
+# Still Use TQ Unraid Docker
+https://forums.unraid.net/topic/80868-support-clamav/?do=findComment&comment=1480146
+WIP as Clietns / End users would need to git clone this repo and add variables for docker...
