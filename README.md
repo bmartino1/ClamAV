@@ -14,8 +14,8 @@ See some documentation:
 
     ```bash
     cd /mnt/user/appdata
-    git clone https://github.com/bmartino1/ClamAV.git
-    cd ClamAV
+    git clone [https://github.com/bmartino1/ClamAV.git](https://github.com/bmartino1/ClamAV-Unriad-DC.git)
+    cd ClamAV-Unriad-DC
     ```
 
 3. In the Unraid web UI, add a new stack, click "Advanced," and change the path to `/mnt/user/appdata/ClamAV`.
